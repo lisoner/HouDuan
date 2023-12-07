@@ -1,6 +1,7 @@
 package com.example.houduan.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer shopId;
     private String shopName;
+    private Integer isDeleted;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(

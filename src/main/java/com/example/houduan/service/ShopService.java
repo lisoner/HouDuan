@@ -9,4 +9,5 @@ import java.util.List;
 public interface ShopService {
     List<Shop> getBusinessShopList(Integer business_id);
     Shop addShop(Integer business_id, String shop_name);
+    Shop deleteShop(String shop_name);
 }

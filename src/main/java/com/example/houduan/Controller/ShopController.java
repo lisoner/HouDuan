@@ -49,4 +49,17 @@ public class ShopController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/DeleteShop")
+    public String deleteShop(String shop_name){
+        try {
+            Shop shop = shopService.deleteShop(shop_name);
+            if(shop != null){
+                return "删除成功";
+            }else {
+                return "删除失败";
+            }
+        } catch (NumberFormatException | NullPointerException e) {
+            return "请求异常";
+        }
+    }
 }

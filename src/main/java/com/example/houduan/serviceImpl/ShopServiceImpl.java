@@ -1,4 +1,4 @@
-package com.example.houduan.imply;
+package com.example.houduan.serviceImpl;
 
 import com.example.houduan.dao.IBusinessDao;
 import com.example.houduan.dao.IShopDao;
@@ -7,7 +7,6 @@ import com.example.houduan.entity.Shop;
 import com.example.houduan.service.ShopService;
 import jakarta.annotation.Resource;
 import lombok.extern.apachecommons.CommonsLog;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Shop> getBusinessShopList(Integer business_id) {
-        return iShopDao.findShopsByBusiness_BusinessId(business_id);
+        return iShopDao.findShopsByBusiness_BusinessIdAndIsDeletedIsNull(business_id);
     }
 
     @Override
@@ -48,5 +47,15 @@ public class ShopServiceImpl implements ShopService {
             }
         }
         return null;
+    }
+
+    @Override
+    public Shop deleteShop(String shop_name) {
+        Shop shop = iShopDao.findByShopName(shop_name);
+        if (shop != null) {
+            shop.setIsDeleted(1);
+            iShopDao.save(shop);
+        }
+        return shop;
     }
 }
