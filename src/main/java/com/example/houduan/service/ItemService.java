@@ -9,4 +9,5 @@ import java.util.List;
 @Service
 public interface ItemService {
     List<Item> getBusinessItemList(Integer business_id);
+    Item addItem(Integer business_id, String item_name, Double item_price);
 }

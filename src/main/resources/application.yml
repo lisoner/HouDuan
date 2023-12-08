@@ -4,11 +4,14 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://120.79.197.220:3306/RuanJianSheJiDaZuoYe
+    url: jdbc:mysql://120.79.197.220:3306/RuanJianSheJiDaZuoYe?useSSL=false&allowPublicKeyRetrieval=true
     username: yxy
     password: yxy913949yxy
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
-mybatis:
-  mapper-locations: classpath:mapper/*Mapper.xml
 
 

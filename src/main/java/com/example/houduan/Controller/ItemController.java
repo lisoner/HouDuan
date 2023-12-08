@@ -40,4 +40,19 @@ public class ItemController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping("/AddItem")
+    public ResponseEntity<Item> addItem(Integer business_id, String item_name, Double item_price){
+       try{
+           Item newItem = itemService.addItem(business_id, item_name, item_price);
+
+           if(newItem != null){
+               return new ResponseEntity<Item>(newItem,HttpStatus.OK);
+           }else {
+               return new ResponseEntity<Item>(HttpStatus.NOT_FOUND);
+           }
+       }catch (NumberFormatException | NullPointerException e) {
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+    }
+
 }
