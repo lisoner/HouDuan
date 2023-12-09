@@ -24,6 +24,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public List<Shop> getAllShopList() {
+        return iShopDao.findAllByIsDeletedIsNull();
+    }
+
+    @Override
     public List<Shop> getBusinessShopList(Integer business_id) {
         return iShopDao.findShopsByBusiness_BusinessIdAndIsDeletedIsNull(business_id);
     }

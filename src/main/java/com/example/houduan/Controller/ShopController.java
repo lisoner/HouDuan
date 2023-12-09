@@ -23,6 +23,18 @@ public class ShopController {
         this.shopService = shopService;
     }
 
+    @PostMapping("/AllShopList")
+    public ResponseEntity<List<ShopListDTO>> AllShopList(){
+        List<Shop> shopList = shopService.getAllShopList();
+        if (shopList != null){
+            List<ShopListDTO> shopListDTOList = shopList.stream()
+                    .map(shop -> new ShopListDTO(shop.getShopId(), shop.getShopName(), shop.getBusiness().getBusinessId()))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(shopListDTOList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/BusinessShopList")
     public ResponseEntity<List<ShopListDTO>> BusinessShopList(Integer business_id){
         List<Shop> shopList = shopService.getBusinessShopList(business_id);

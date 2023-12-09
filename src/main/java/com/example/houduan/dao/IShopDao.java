@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface IShopDao extends JpaRepository<Shop, Integer> {
+    List<Shop> findAllByIsDeletedIsNull();
     Shop findByShopName(String shop_name);
     Shop findByShopId(Integer shop_id);
     List<Shop> findShopsByBusiness_BusinessIdAndIsDeletedIsNull(Integer business_id);
