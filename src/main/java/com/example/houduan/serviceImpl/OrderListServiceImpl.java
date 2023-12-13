@@ -54,6 +54,7 @@ public class OrderListServiceImpl implements OrderListService {
                     .id(id)
                     .item(item)
                     .orderTable(orderTable)
+                    .itemQuantity(item_quantity)
                     .build();
             return iOrderListDao.save(orderList);
         }
