@@ -8,7 +8,8 @@ import java.util.List;
 
 @Service
 public interface OrderListService {
+    List<OrderList> findByItem_ItemId(Integer item_id);
     List<OrderList> findByOrderTable_OrderId(Integer order_id);
     OrderList findByOrderTable_OrderIdAndItemItemId(Integer order_id, Integer item_id);
-    OrderList save(OrderList orderList);
+    OrderList save(Integer id, Integer item_id, Integer order_id, Integer item_quantity);
 }

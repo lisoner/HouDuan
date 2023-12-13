@@ -44,4 +44,11 @@ public class ItemServiceImpl implements ItemService {
         }
         return null;
     }
+
+    @Override
+    public Item findByItemId(Integer item_id) {
+        return iItemDao.findByItemId(item_id);
+    }
+
+
 }

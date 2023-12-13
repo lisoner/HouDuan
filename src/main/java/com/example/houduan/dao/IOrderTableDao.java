@@ -13,6 +13,7 @@ public interface IOrderTableDao extends JpaRepository<OrderTable, Integer> {
     OrderTable findByCustomer_CustomerId(Integer customer_id);
     List<OrderTable> findByShopShopId(Integer shop_id);
     List<OrderTable> findByOrderState(Integer order_state);
+    OrderTable findByOrderId(Integer order_id);
     OrderTable findByCustomer_CustomerIdAndShopShopIdAndOrderState(Integer customer_id, Integer shop_id, Integer order_state);
 
 

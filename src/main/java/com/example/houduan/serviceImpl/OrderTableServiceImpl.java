@@ -47,6 +47,11 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     @Override
+    public OrderTable findByOrderId(Integer order_id) {
+        return iOrderTableDao.findByOrderId(order_id);
+    }
+
+    @Override
     public List<OrderTable> findByShopShopId(Integer shop_id) {
         return iOrderTableDao.findByShopShopId(shop_id);
     }
