@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ICustomerDao extends JpaRepository<Customer, Integer> {
     Customer findCustomerByCustomerName(String customer_name);
     Customer findByCustomerNameAndPassword(String customer_name, String password);
+    Customer findByCustomerId(Integer customer_id);
 }

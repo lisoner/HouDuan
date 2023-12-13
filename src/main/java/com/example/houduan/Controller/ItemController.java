@@ -30,14 +30,19 @@ public class ItemController {
 
     @PostMapping("/BusinessItemList")
     public ResponseEntity<List<ItemListDTO>> BusinessItemList(Integer business_id){
-        List<Item> itemList = itemService.getBusinessItemList(business_id);
-        if(itemList != null){
-            List<ItemListDTO> itemListDTOList = itemList.stream()
-                    .map(item -> new ItemListDTO(item.getItemId(), item.getItemName(),item.getItemPrice(), item.getBusiness().getBusinessId()))
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(itemListDTOList, HttpStatus.OK);
+        try{
+            List<Item> itemList = itemService.getBusinessItemList(business_id);
+            if(itemList != null){
+                List<ItemListDTO> itemListDTOList = itemList.stream()
+                        .map(item -> new ItemListDTO(item.getItemId(), item.getItemName(),item.getItemPrice(), item.getBusiness().getBusinessId()))
+                        .collect(Collectors.toList());
+                return new ResponseEntity<>(itemListDTOList, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (NumberFormatException | NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/AddItem")
