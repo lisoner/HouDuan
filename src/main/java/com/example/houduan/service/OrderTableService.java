@@ -9,8 +9,8 @@ import java.util.List;
 
 @Service
 public interface OrderTableService {
-    OrderTable addOrderTable(Integer customer_id, Integer shop_id, Integer order_state);
-    OrderTable findByCustomer_CustomerId(Integer customer_id);
+    OrderTable addOrderTable(Integer order_id,Integer customer_id, Integer shop_id, Integer order_state, Double order_cost);
+    List<OrderTable> findByCustomer_CustomerId(Integer customer_id);
     OrderTable findByOrderId(Integer order_id);
     List<OrderTable> findByShopShopId(Integer shop_id);
     List<OrderTable> findByOrderState(Integer order_state);

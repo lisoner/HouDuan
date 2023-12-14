@@ -63,4 +63,19 @@ public class OrderListController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/ListOrderListByCustomerId")
+    public ResponseEntity<List<OrderList>> listOrderListByCustomerId(@RequestParam Integer customer_id){
+        try{
+            List<OrderList> orderListList = orderListService.findByOrderTable_Customer_CustomerId(customer_id);
+
+            if (orderListList != null){
+                return new ResponseEntity<>(orderListList, HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }catch (NumberFormatException | NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

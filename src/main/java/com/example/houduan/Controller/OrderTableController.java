@@ -5,10 +5,13 @@ import com.example.houduan.entity.Item;
 import com.example.houduan.entity.OrderTable;
 import com.example.houduan.service.OrderTableService;
 import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -23,7 +26,7 @@ public class OrderTableController {
         this.iOrderTableDao = iOrderTableDao;
     }
 
-    @PostMapping("/FindOrderTable")
+    @PostMapping("/FindOrderTableByCustomerIdShopIdOrderState")
     public ResponseEntity<OrderTable> findOrderTable(@RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state){
         try{
             OrderTable orderTable = iOrderTableDao.findByCustomer_CustomerIdAndShopShopIdAndOrderState(customer_id, shop_id, order_state);
@@ -38,10 +41,24 @@ public class OrderTableController {
         }
     }
 
-    @PostMapping("/AddOrderTable")
-    public ResponseEntity<OrderTable> addOrderTable(@RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state){
+    @PostMapping("/ListOrderTableByCustomerId")
+    public ResponseEntity<List<OrderTable>> listOrderTableByCustomerId(@RequestParam Integer customer_id){
         try{
-            OrderTable newOrderTable = orderTableService.addOrderTable(customer_id, shop_id, order_state);
+            List<OrderTable> orderTableList = orderTableService.findByCustomer_CustomerId(customer_id);
+            if (orderTableList != null){
+                return new ResponseEntity<>(orderTableList, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }catch (NumberFormatException | NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/AddOrderTable")
+    public ResponseEntity<OrderTable> addOrderTable(@RequestParam Integer order_id, @RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state, @RequestParam Double order_cost){
+        try{
+            OrderTable newOrderTable = orderTableService.addOrderTable(order_id,customer_id, shop_id, order_state, order_cost);
             if(newOrderTable != null){
                 return new ResponseEntity<>(newOrderTable, HttpStatus.OK);
             }else {
@@ -52,5 +69,7 @@ public class OrderTableController {
         }
 
     }
+
+
 
 }

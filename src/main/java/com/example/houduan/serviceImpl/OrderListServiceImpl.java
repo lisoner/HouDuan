@@ -59,4 +59,9 @@ public class OrderListServiceImpl implements OrderListService {
             return iOrderListDao.save(orderList);
         }
     }
+
+    @Override
+    public List<OrderList> findByOrderTable_Customer_CustomerId(Integer customer_id) {
+        return iOrderListDao.findByOrderTable_Customer_CustomerId(customer_id);
+    }
 }

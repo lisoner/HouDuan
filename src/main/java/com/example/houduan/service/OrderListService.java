@@ -12,4 +12,5 @@ public interface OrderListService {
     List<OrderList> findByOrderTable_OrderId(Integer order_id);
     OrderList findByOrderTable_OrderIdAndItemItemId(Integer order_id, Integer item_id);
     OrderList save(Integer id, Integer item_id, Integer order_id, Integer item_quantity);
+    List<OrderList> findByOrderTable_Customer_CustomerId(Integer customer_id);
 }

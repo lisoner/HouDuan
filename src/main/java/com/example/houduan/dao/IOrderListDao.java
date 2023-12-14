@@ -12,4 +12,5 @@ public interface IOrderListDao extends JpaRepository<OrderList, Integer> {
     List<OrderList> findByOrderTable_OrderId(Integer order_id);
     OrderList findByOrderTable_OrderIdAndItemItemId(Integer order_id, Integer item_id);
     OrderList save(OrderList orderList);
+    List<OrderList> findByOrderTable_Customer_CustomerId(Integer customer_id);
 }

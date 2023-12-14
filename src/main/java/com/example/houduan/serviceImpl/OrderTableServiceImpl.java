@@ -30,19 +30,33 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     @Override
-    public OrderTable addOrderTable(Integer customer_id, Integer shop_id, Integer order_state) {
-        Customer customer = iCustomerDao.findByCustomerId(customer_id);
-        Shop shop = iShopDao.findByShopId(shop_id);
-        OrderTable orderTable = OrderTable.builder()
-                .customer(customer)
-                .shop(shop)
-                .orderState(order_state)
-                .build();
-        return iOrderTableDao.save(orderTable);
+    public OrderTable addOrderTable(Integer order_id, Integer customer_id, Integer shop_id, Integer order_state, Double order_cost) {
+        if(order_id != 0){
+            Customer customer = iCustomerDao.findByCustomerId(customer_id);
+            Shop shop = iShopDao.findByShopId(shop_id);
+            OrderTable orderTable = OrderTable.builder()
+                    .orderId(order_id)
+                    .customer(customer)
+                    .shop(shop)
+                    .orderState(order_state)
+                    .orderCost(order_cost)
+                    .build();
+            return iOrderTableDao.save(orderTable);
+        }else{
+            Customer customer = iCustomerDao.findByCustomerId(customer_id);
+            Shop shop = iShopDao.findByShopId(shop_id);
+            OrderTable orderTable = OrderTable.builder()
+                    .customer(customer)
+                    .shop(shop)
+                    .orderState(order_state)
+                    .orderCost(order_cost)
+                    .build();
+            return iOrderTableDao.save(orderTable);
+        }
     }
 
     @Override
-    public OrderTable findByCustomer_CustomerId(Integer customer_id) {
+    public List<OrderTable> findByCustomer_CustomerId(Integer customer_id) {
         return iOrderTableDao.findByCustomer_CustomerId(customer_id);
     }
 

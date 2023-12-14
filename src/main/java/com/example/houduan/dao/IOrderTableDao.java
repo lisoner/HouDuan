@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface IOrderTableDao extends JpaRepository<OrderTable, Integer> {
     OrderTable save(OrderTable orderTable);
-    OrderTable findByCustomer_CustomerId(Integer customer_id);
+    List<OrderTable> findByCustomer_CustomerId(Integer customer_id);
     List<OrderTable> findByShopShopId(Integer shop_id);
     List<OrderTable> findByOrderState(Integer order_state);
     OrderTable findByOrderId(Integer order_id);
