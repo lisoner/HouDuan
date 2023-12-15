@@ -70,6 +70,14 @@ public class OrderTableController {
 
     }
 
-
+    @PostMapping("/FindListOrderTableByShopId")
+    public ResponseEntity<List<OrderTable>> findListOrderTableByShopId(@RequestParam Integer shop_id){
+        try{
+            List<OrderTable> orderTableList = orderTableService.findByShopShopId(shop_id);
+            return new ResponseEntity<>(orderTableList, HttpStatus.OK);
+        }catch (NumberFormatException | NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

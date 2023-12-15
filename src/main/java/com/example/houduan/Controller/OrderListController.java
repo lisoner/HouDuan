@@ -1,6 +1,8 @@
 package com.example.houduan.Controller;
 
+import com.example.houduan.dto.OrderListDTO;
 import com.example.houduan.entity.OrderList;
+import com.example.houduan.entity.OrderTable;
 import com.example.houduan.service.ItemService;
 import com.example.houduan.service.OrderListService;
 import com.example.houduan.service.OrderTableService;
@@ -15,7 +17,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,6 +38,22 @@ public class OrderListController {
         this.orderListService = orderListService;
     }
 
+/*    @PostMapping('/ListOrderDetailByCid')
+    public ResponseEntity<Map<Integer, OrderListDTO>> listOrderDetailByCid(@RequestParam Integer customer_id){
+        try{
+            Map<Integer, OrderListDTO> map = new HashMap<>();
+            List<OrderTable> orderTableList = orderTableService.findByCustomer_CustomerId(customer_id);
+            for (OrderTable orderTable : orderTableList) {
+                List<OrderList> orderListList = orderListService.findByOrderTable_OrderId(orderTable.getOrderId());
+                OrderListDTO orderListDTO = OrderListDTO.builder()
+                        .itemId()
+                        .build();
+                map.put(orderTable.getOrderId(),orderListDTO);
+            }
+        }catch (NumberFormatException | NullPointerException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }*/
 
     @PostMapping("/ListOrderListByOrderId")
     public ResponseEntity<List<OrderList>> listOrderListByOrderId(@RequestParam Integer order_id){
