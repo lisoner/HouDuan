@@ -3,12 +3,13 @@ package com.example.houduan.dto;
 import com.example.houduan.entity.Item;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
+/*@Data
 @AllArgsConstructor
+@NoArgsConstructor*/
 public class OrderDetailDTO {
-
 
 }

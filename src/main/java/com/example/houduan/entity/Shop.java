@@ -21,7 +21,7 @@ public class Shop {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "business_id",/*这里和数据库表的列名对应*/
+            name = "businessId",/*这里和数据库表的列名对应*/
             referencedColumnName = "businessId"/*这里和entity的Business类里面的属性对应*/
     )
     private Business business;

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderListDTO {
+    private Integer orderId;
     private Integer itemId;
     private String itemName;
     private Double itemPrice;

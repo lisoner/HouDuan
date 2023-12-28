@@ -6,6 +6,8 @@ import com.example.houduan.entity.OrderTable;
 import com.example.houduan.service.ItemService;
 import com.example.houduan.service.OrderListService;
 import com.example.houduan.service.OrderTableService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Order;
@@ -25,6 +27,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @RequestMapping
+@Tag(name = "OrderList", description = "OrderListController")
 public class OrderListController {
     @Resource
     OrderListService orderListService;
@@ -38,64 +41,20 @@ public class OrderListController {
         this.orderListService = orderListService;
     }
 
-/*    @PostMapping('/ListOrderDetailByCid')
-    public ResponseEntity<Map<Integer, OrderListDTO>> listOrderDetailByCid(@RequestParam Integer customer_id){
-        try{
-            Map<Integer, OrderListDTO> map = new HashMap<>();
-            List<OrderTable> orderTableList = orderTableService.findByCustomer_CustomerId(customer_id);
-            for (OrderTable orderTable : orderTableList) {
-                List<OrderList> orderListList = orderListService.findByOrderTable_OrderId(orderTable.getOrderId());
-                OrderListDTO orderListDTO = OrderListDTO.builder()
-                        .itemId()
-                        .build();
-                map.put(orderTable.getOrderId(),orderListDTO);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }*/
-
+    @Operation(summary = "根据订单id查订单购买的物品" ,description = "")
     @PostMapping("/ListOrderListByOrderId")
-    public ResponseEntity<List<OrderList>> listOrderListByOrderId(@RequestParam Integer order_id){
-        try{
-            List<OrderList> orderListList = orderListService.findByOrderTable_OrderId(order_id);
-
-            if (orderListList != null){
-                return new ResponseEntity<>(orderListList, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public List<OrderListDTO> listOrderListByOrderId(@RequestParam Integer order_id){
+        return orderListService.findByOrderTable_OrderId(order_id);
     }
 
+    @Operation(summary = "保存此订单下的物品信息" ,description = "")
     @PostMapping("/SaveOrderList")
-    public ResponseEntity<OrderList> saveOrderList(@RequestParam Integer id, Integer item_id, Integer order_id, Integer item_quantity){
-        try{
-            OrderList orderList = orderListService.save(id, item_id, order_id, item_quantity);
-            if (orderList != null){
-                return new ResponseEntity<>(orderList, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public OrderListDTO saveOrderList(@RequestParam Integer id, Integer item_id, Integer order_id, Integer item_quantity){
+        return orderListService.save(id, item_id, order_id, item_quantity);
     }
 
     @PostMapping("/ListOrderListByCustomerId")
-    public ResponseEntity<List<OrderList>> listOrderListByCustomerId(@RequestParam Integer customer_id){
-        try{
-            List<OrderList> orderListList = orderListService.findByOrderTable_Customer_CustomerId(customer_id);
-
-            if (orderListList != null){
-                return new ResponseEntity<>(orderListList, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public List<OrderListDTO> listOrderListByCustomerId(@RequestParam Integer customer_id){
+        return orderListService.findByOrderTable_Customer_CustomerId(customer_id);
     }
 }

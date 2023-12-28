@@ -2,6 +2,8 @@ package com.example.houduan.Controller;
 
 import com.example.houduan.entity.Business;
 import com.example.houduan.service.BusinessService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/businessLogin")
+@Tag(name = "Business", description = "BusinessController")
 public class BusinessController {
     @Resource
     BusinessService businessService;
@@ -21,24 +24,10 @@ public class BusinessController {
     }
 
     /*这里是Login部分*/
+    @Operation(summary = "商家登录",description = "商家登录")
     @PostMapping
     public ResponseEntity<Object> login(@RequestParam String business_name, @RequestParam String password){
-        Business business = businessService.login(business_name, password);
-        if (business != null) {
-            LoginResponse loginResponse = new LoginResponse();
-            loginResponse.setBusiness_id(business.getBusinessId());
-            loginResponse.setBusiness_name(business_name);
-            loginResponse.setMessage("Login successful");
-            return new ResponseEntity<>(loginResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
-        }
-    }
-    @Data
-    public class LoginResponse{
-        private Integer business_id;
-        private String business_name;
-        private String message;
+        return new ResponseEntity<>(businessService.login(business_name, password), HttpStatus.OK);
     }
 
 }

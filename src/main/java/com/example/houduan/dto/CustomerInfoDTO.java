@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShopListDTO {
-    private Integer shopId;
-    private String shopName;
-    private Integer businessId;
-
+public class CustomerInfoDTO {
+    Integer customerId;
+    String customerName;
+    String message;
 }

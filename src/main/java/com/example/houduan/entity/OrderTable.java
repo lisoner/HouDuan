@@ -22,14 +22,14 @@ public class OrderTable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "shop_id",
+            name = "shopId",
             referencedColumnName = "shopId"
     )
     private Shop shop;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "customer_id",
+            name = "customerId",
             referencedColumnName = "customerId"
     )
     private Customer customer;

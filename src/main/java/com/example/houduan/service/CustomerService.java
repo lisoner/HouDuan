@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomerService {
-    Customer login(String customer_name, String password);
+    Object login(String customer_name, String password);
 }

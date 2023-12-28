@@ -13,5 +13,15 @@ spring:
       ddl-auto: update
     show-sql: true
 
+# springdoc
+springdoc:
+  swagger-ui:
+    path: /doc-ui
+  api-docs:
+    path: /api-docs
 
-
+# openAPI
+api:
+  title: demo demo
+  version: 1.0.0
+  description: demo demo

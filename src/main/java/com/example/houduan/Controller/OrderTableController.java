@@ -4,6 +4,8 @@ import com.example.houduan.dao.IOrderTableDao;
 import com.example.houduan.entity.Item;
 import com.example.houduan.entity.OrderTable;
 import com.example.houduan.service.OrderTableService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping
+@Tag(name = "OrderTable", description = "OrderTableController")
 public class OrderTableController {
     @Resource
     IOrderTableDao iOrderTableDao;
@@ -26,58 +29,27 @@ public class OrderTableController {
         this.iOrderTableDao = iOrderTableDao;
     }
 
+    @Operation(summary = "根据顾客id、门店id、订单状态找到订单" ,description = "")
     @PostMapping("/FindOrderTableByCustomerIdShopIdOrderState")
-    public ResponseEntity<OrderTable> findOrderTable(@RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state){
-        try{
-            OrderTable orderTable = iOrderTableDao.findByCustomer_CustomerIdAndShopShopIdAndOrderState(customer_id, shop_id, order_state);
-
-            if(orderTable != null){
-                return new ResponseEntity<>(orderTable,HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public OrderTable findOrderTable(@RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state){
+        return iOrderTableDao.findByCustomer_CustomerIdAndShopShopIdAndOrderState(customer_id, shop_id, order_state);
     }
 
+    @Operation(summary = "根据顾客id查顾客的订单" ,description = "")
     @PostMapping("/ListOrderTableByCustomerId")
-    public ResponseEntity<List<OrderTable>> listOrderTableByCustomerId(@RequestParam Integer customer_id){
-        try{
-            List<OrderTable> orderTableList = orderTableService.findByCustomer_CustomerId(customer_id);
-            if (orderTableList != null){
-                return new ResponseEntity<>(orderTableList, HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public List<OrderTable> listOrderTableByCustomerId(@RequestParam Integer customer_id){
+        return orderTableService.findByCustomer_CustomerId(customer_id);
     }
 
+    @Operation(summary = "保存/更新 订单信息" ,description = "")
     @PostMapping("/AddOrderTable")
-    public ResponseEntity<OrderTable> addOrderTable(@RequestParam Integer order_id, @RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state, @RequestParam Double order_cost){
-        try{
-            OrderTable newOrderTable = orderTableService.addOrderTable(order_id,customer_id, shop_id, order_state, order_cost);
-            if(newOrderTable != null){
-                return new ResponseEntity<>(newOrderTable, HttpStatus.OK);
-            }else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
+    public OrderTable addOrderTable(@RequestParam Integer order_id, @RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state, @RequestParam Double order_cost){
+        return orderTableService.addOrderTable(order_id,customer_id, shop_id, order_state, order_cost);
     }
 
+    @Operation(summary = "根据门店id查订单列表" ,description = "")
     @PostMapping("/FindListOrderTableByShopId")
-    public ResponseEntity<List<OrderTable>> findListOrderTableByShopId(@RequestParam Integer shop_id){
-        try{
-            List<OrderTable> orderTableList = orderTableService.findByShopShopId(shop_id);
-            return new ResponseEntity<>(orderTableList, HttpStatus.OK);
-        }catch (NumberFormatException | NullPointerException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public List<OrderTable> findListOrderTableByShopId(@RequestParam Integer shop_id) {
+        return orderTableService.findByShopShopId(shop_id);
     }
-
 }

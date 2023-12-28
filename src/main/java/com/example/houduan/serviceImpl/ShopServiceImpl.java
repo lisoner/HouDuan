@@ -2,6 +2,7 @@ package com.example.houduan.serviceImpl;
 
 import com.example.houduan.dao.IBusinessDao;
 import com.example.houduan.dao.IShopDao;
+import com.example.houduan.dto.ShopListDTO;
 import com.example.houduan.entity.Business;
 import com.example.houduan.entity.Shop;
 import com.example.houduan.service.ShopService;
@@ -10,6 +11,7 @@ import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @CommonsLog
@@ -24,13 +26,19 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<Shop> getAllShopList() {
-        return iShopDao.findAllByIsDeletedIsNull();
+    public List<ShopListDTO> getAllShopList() {
+        List<Shop> shopList = iShopDao.findAll();
+        return shopList.stream()
+                .map(shop -> new ShopListDTO(shop.getShopId(), shop.getShopName(), shop.getBusiness().getBusinessId()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Shop> getBusinessShopList(Integer business_id) {
-        return iShopDao.findShopsByBusiness_BusinessIdAndIsDeletedIsNull(business_id);
+    public List<ShopListDTO> getBusinessShopList(Integer business_id) {
+        List<Shop> shopList = iShopDao.findShopsByBusiness_BusinessIdAndIsDeletedIsNull(business_id);
+        return shopList.stream()
+                .map(shop -> new ShopListDTO(shop.getShopId(), shop.getShopName(), shop.getBusiness().getBusinessId()))
+                .toList();
     }
 
     @Override

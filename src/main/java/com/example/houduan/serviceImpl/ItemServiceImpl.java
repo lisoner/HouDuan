@@ -2,14 +2,18 @@ package com.example.houduan.serviceImpl;
 
 import com.example.houduan.dao.IBusinessDao;
 import com.example.houduan.dao.IItemDao;
+import com.example.houduan.dto.ItemDTO;
 import com.example.houduan.entity.Business;
 import com.example.houduan.entity.Item;
 import com.example.houduan.service.ItemService;
 import jakarta.annotation.Resource;
 import lombok.extern.apachecommons.CommonsLog;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @CommonsLog
@@ -18,16 +22,21 @@ public class ItemServiceImpl implements ItemService {
     IItemDao iItemDao;
     @Resource
     IBusinessDao iBusinessDao;
+    @Autowired
+    protected ModelMapper modelMapper;
 
     public ItemServiceImpl(IItemDao iItemDao){
         this.iItemDao=iItemDao;
     }
     @Override
-    public List<Item> getBusinessItemList(Integer business_id) {
-        return iItemDao.findByBusiness_BusinessId(business_id);
+    public List<ItemDTO> getBusinessItemList(Integer business_id) {
+        List<Item> itemList = iItemDao.findByBusiness_BusinessId(business_id);
+        return itemList.stream()
+                .map(item -> new ItemDTO(item.getItemId(), item.getItemName(), item.getItemPrice(), item.getBusiness().getBusinessId()))
+                .collect(Collectors.toList());
     }
     @Override
-    public Item addItem(Integer business_id, String item_name, Double item_price){
+    public ItemDTO addItem(Integer business_id, String item_name, Double item_price){
         if(!iItemDao.existsByBusiness_BusinessIdAndItemName(business_id, item_name)){
             Business business = iBusinessDao.findByBusinessId(business_id);
             if(business != null){
@@ -36,8 +45,9 @@ public class ItemServiceImpl implements ItemService {
                         .itemPrice(item_price)
                         .business(business)
                         .build();
+                iItemDao.save(newItem);
+                return modelMapper.map(newItem, ItemDTO.class);
 
-                return iItemDao.save(newItem);
             }else {
                 return null;
             }

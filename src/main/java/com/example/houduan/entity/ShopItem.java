@@ -18,12 +18,12 @@ public class ShopItem {
     private Integer id;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "shop_id",
+            name = "shopId",
             referencedColumnName = "shopId")
     private Shop shop;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "item_id",
+            name = "itemId",
             referencedColumnName = "itemId")
     private Item item;
 }
