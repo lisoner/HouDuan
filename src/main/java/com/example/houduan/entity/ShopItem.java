@@ -17,13 +17,15 @@ public class ShopItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(
-            name = "shopId",
-            referencedColumnName = "shopId")
+    @JoinColumns({
+            @JoinColumn(name = "shopId", referencedColumnName = "shopId"),
+            @JoinColumn(name = "shopName", referencedColumnName = "shopName"),
+    })
     private Shop shop;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(
-            name = "itemId",
-            referencedColumnName = "itemId")
+    @JoinColumns({
+            @JoinColumn(name = "itemId", referencedColumnName = "itemId"),
+            @JoinColumn(name = "itemName", referencedColumnName = "itemName"),
+    })
     private Item item;
 }

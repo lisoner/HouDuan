@@ -20,16 +20,16 @@ public class OrderList {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "order_id",/*这里和数据库表的列名对应*/
+            name = "orderId",/*这里和数据库表的列名对应*/
             referencedColumnName = "orderId"/*这里和entity的Business类里面的属性对应*/
     )
     private OrderTable orderTable;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(
-            name = "item_id",/*这里和数据库表的列名对应*/
-            referencedColumnName = "itemId"/*这里和entity的Business类里面的属性对应*/
-    )
+    @JoinColumns({
+            @JoinColumn(name = "itemId", referencedColumnName = "itemId"),
+            @JoinColumn(name = "itemName", referencedColumnName = "itemName"),
+    })
     private Item item;
 
 }

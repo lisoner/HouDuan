@@ -8,5 +8,4 @@ import lombok.*;
 public class BusinessInfoDTO {
     Integer businessId;
     String businessName;
-    String message;
 }

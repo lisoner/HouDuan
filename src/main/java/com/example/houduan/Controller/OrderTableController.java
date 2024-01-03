@@ -1,6 +1,8 @@
 package com.example.houduan.Controller;
 
 import com.example.houduan.dao.IOrderTableDao;
+import com.example.houduan.dto.OrderDetailDTO;
+import com.example.houduan.dto.OrderTableDTO;
 import com.example.houduan.entity.Item;
 import com.example.houduan.entity.OrderTable;
 import com.example.houduan.service.OrderTableService;
@@ -21,18 +23,16 @@ import java.util.List;
 @Tag(name = "OrderTable", description = "OrderTableController")
 public class OrderTableController {
     @Resource
-    IOrderTableDao iOrderTableDao;
-    @Resource
     OrderTableService orderTableService;
     @Autowired
-    public OrderTableController(IOrderTableDao iOrderTableDao) {
-        this.iOrderTableDao = iOrderTableDao;
+    public OrderTableController(OrderTableService orderTableService) {
+        this.orderTableService = orderTableService;
     }
 
     @Operation(summary = "根据顾客id、门店id、订单状态找到订单" ,description = "")
     @PostMapping("/FindOrderTableByCustomerIdShopIdOrderState")
-    public OrderTable findOrderTable(@RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state){
-        return iOrderTableDao.findByCustomer_CustomerIdAndShopShopIdAndOrderState(customer_id, shop_id, order_state);
+    public List<OrderTable> findOrderTable(@RequestParam Integer customer_id, @RequestParam Integer shop_id, @RequestParam Integer order_state){
+        return orderTableService.findByCustomer_CustomerIdAndShopShopIdAndOrderState(customer_id, shop_id, order_state);
     }
 
     @Operation(summary = "根据顾客id查顾客的订单" ,description = "")

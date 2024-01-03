@@ -1,25 +1,20 @@
 package com.example.houduan.dto;
 
-import com.example.houduan.entity.Item;
-import com.example.houduan.entity.OrderList;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
-import java.util.List;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class OrderDetailDTO {
+@AllArgsConstructor
+public class OrderTableDTO {
     private Integer orderId;
     private Integer orderState;
     private Double orderCost;
-    private Integer customerId;
     private Integer shopId;
     private String shopName;
+    private Integer customerId;
     private String customerName;
-    private List<OrderListDTO> orderListDTOList;
 }

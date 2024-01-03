@@ -20,9 +20,9 @@ public class Shop {
     private Integer isDeleted;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(
-            name = "businessId",/*这里和数据库表的列名对应*/
-            referencedColumnName = "businessId"/*这里和entity的Business类里面的属性对应*/
-    )
+    @JoinColumns({
+            @JoinColumn(name = "businessId", referencedColumnName = "businessId"),
+            @JoinColumn(name = "businessName", referencedColumnName = "businessName"),
+    })
     private Business business;
 }

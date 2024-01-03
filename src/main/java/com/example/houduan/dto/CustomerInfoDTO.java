@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class CustomerInfoDTO {
     Integer customerId;
     String customerName;
-    String message;
 }

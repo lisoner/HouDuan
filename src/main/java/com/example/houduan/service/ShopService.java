@@ -1,6 +1,6 @@
 package com.example.houduan.service;
 
-import com.example.houduan.dto.ShopListDTO;
+import com.example.houduan.dto.ShopDTO;
 import com.example.houduan.entity.Shop;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +8,9 @@ import java.util.List;
 
 @Service
 public interface ShopService {
-    List<ShopListDTO> getAllShopList();
-    List<ShopListDTO> getBusinessShopList(Integer business_id);
-    Shop addShop(Integer business_id, String shop_name);
-    Shop deleteShop(String shop_name);
+    List<ShopDTO> getAllShopList();
+    List<ShopDTO> findShopsByBusiness_BusinessIdAndIsDeletedIsNull(Integer business_id);
+    ShopDTO addShop(Integer business_id, String shop_name);
+    ShopDTO deleteShop(String shop_name);
+    Shop findByShopId(Integer shop_id);
 }

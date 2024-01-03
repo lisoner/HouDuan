@@ -2,9 +2,11 @@ package com.example.houduan.serviceImpl;
 
 import com.example.houduan.dao.IBusinessDao;
 import com.example.houduan.dao.IItemDao;
+import com.example.houduan.dto.BusinessInfoDTO;
 import com.example.houduan.dto.ItemDTO;
 import com.example.houduan.entity.Business;
 import com.example.houduan.entity.Item;
+import com.example.houduan.service.BusinessService;
 import com.example.houduan.service.ItemService;
 import jakarta.annotation.Resource;
 import lombok.extern.apachecommons.CommonsLog;
@@ -21,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
     @Resource
     IItemDao iItemDao;
     @Resource
-    IBusinessDao iBusinessDao;
+    BusinessService businessService;
     @Autowired
     protected ModelMapper modelMapper;
 
@@ -32,13 +34,13 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDTO> getBusinessItemList(Integer business_id) {
         List<Item> itemList = iItemDao.findByBusiness_BusinessId(business_id);
         return itemList.stream()
-                .map(item -> new ItemDTO(item.getItemId(), item.getItemName(), item.getItemPrice(), item.getBusiness().getBusinessId()))
+                .map(item -> new ItemDTO(item.getItemId(), item.getItemName(), item.getItemPrice(), item.getBusiness().getBusinessId(), item.getBusiness().getBusinessName()))
                 .collect(Collectors.toList());
     }
     @Override
     public ItemDTO addItem(Integer business_id, String item_name, Double item_price){
         if(!iItemDao.existsByBusiness_BusinessIdAndItemName(business_id, item_name)){
-            Business business = iBusinessDao.findByBusinessId(business_id);
+            Business business = businessService.findByBusinessId(business_id);
             if(business != null){
                 Item newItem = Item.builder()
                         .itemName(item_name)

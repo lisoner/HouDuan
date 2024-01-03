@@ -8,6 +8,8 @@ import com.example.houduan.entity.Customer;
 import com.example.houduan.service.CustomerService;
 import jakarta.annotation.Resource;
 import lombok.extern.apachecommons.CommonsLog;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,22 +17,33 @@ import org.springframework.stereotype.Component;
 public class CustomerServiceImpl implements CustomerService {
     @Resource
     ICustomerDao iCustomerDao;
+    @Autowired
+    protected ModelMapper modelMapper;
 
     public CustomerServiceImpl(ICustomerDao iCustomerDao){
         this.iCustomerDao = iCustomerDao;
     }
 
     @Override
-    public Object login(String customerName, String password){
+    public CustomerInfoDTO login(String customerName, String password){
         Customer customer = iCustomerDao.findByCustomerNameAndPassword(customerName, password);
         if (customer != null) {
             CustomerInfoDTO customerInfoDTO = new CustomerInfoDTO();
             customerInfoDTO.setCustomerId(customer.getCustomerId());
             customerInfoDTO.setCustomerName(customerName);
-            customerInfoDTO.setMessage("Login successful");
             return customerInfoDTO;
         } else {
             return null;
         }
+    }
+
+    @Override
+    public CustomerInfoDTO findCustomerByCustomerName(String customer_name) {
+        return modelMapper.map(iCustomerDao.findCustomerByCustomerName(customer_name), CustomerInfoDTO.class);
+    }
+
+    @Override
+    public Customer findByCustomerId(Integer customer_id) {
+        return iCustomerDao.findByCustomerId(customer_id);
     }
 }

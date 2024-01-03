@@ -1,5 +1,6 @@
 package com.example.houduan.Controller;
 
+import com.example.houduan.dto.ShopItemDTO;
 import com.example.houduan.entity.ShopItem;
 import com.example.houduan.service.ShopItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,13 +30,13 @@ public class ShopItemController {
 
     @Operation(summary = "根据门店id查门店下的上架商品" ,description = "")
     @PostMapping("/ShopItemList")
-    public List<ShopItem> shopItemList(Integer shop_id){
+    public List<ShopItemDTO> shopItemList(Integer shop_id){
         return shopItemService.shopItemList(shop_id);
     }
 
     @Operation(summary = "在门店上架商品" ,description = "")
     @PostMapping("/AddShopItem")
-    public ShopItem addShopItem(Integer shop_id, Integer item_id){
+    public ShopItemDTO addShopItem(Integer shop_id, Integer item_id){
         return shopItemService.addShopItem(shop_id, item_id);
     }
 

@@ -21,17 +21,17 @@ public class OrderTable {
 
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(
-            name = "shopId",
-            referencedColumnName = "shopId"
-    )
+    @JoinColumns({
+            @JoinColumn(name = "shopId", referencedColumnName = "shopId"),
+            @JoinColumn(name = "shopName", referencedColumnName = "shopName"),
+    })
     private Shop shop;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(
-            name = "customerId",
-            referencedColumnName = "customerId"
-    )
+    @JoinColumns({
+            @JoinColumn(name = "customerId", referencedColumnName = "customerId"),
+            @JoinColumn(name = "customerName", referencedColumnName = "customerName"),
+    })
     private Customer customer;
 
 }

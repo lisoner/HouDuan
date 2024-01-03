@@ -1,18 +1,23 @@
 package com.example.houduan.serviceImpl;
 
-import com.example.houduan.dao.ICustomerDao;
-import com.example.houduan.dao.IOrderTableDao;
-import com.example.houduan.dao.IShopDao;
-import com.example.houduan.dao.IShopItemDao;
+import com.example.houduan.dao.*;
+import com.example.houduan.dto.*;
 import com.example.houduan.entity.Customer;
+import com.example.houduan.entity.OrderList;
 import com.example.houduan.entity.OrderTable;
 import com.example.houduan.entity.Shop;
+import com.example.houduan.service.CustomerService;
+import com.example.houduan.service.OrderListService;
 import com.example.houduan.service.OrderTableService;
+import com.example.houduan.service.ShopService;
 import jakarta.annotation.Resource;
 import lombok.extern.apachecommons.CommonsLog;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,9 +26,11 @@ public class OrderTableServiceImpl implements OrderTableService {
     @Resource
     IOrderTableDao iOrderTableDao;
     @Resource
-    ICustomerDao iCustomerDao;
+    CustomerService customerService;
     @Resource
-    IShopDao iShopDao;
+    ShopService shopService;
+    @Autowired
+    protected ModelMapper modelMapper;
 
     public OrderTableServiceImpl(IOrderTableDao iOrderTableDao) {
         this.iOrderTableDao = iOrderTableDao;
@@ -32,26 +39,26 @@ public class OrderTableServiceImpl implements OrderTableService {
     @Override
     public OrderTable addOrderTable(Integer order_id, Integer customer_id, Integer shop_id, Integer order_state, Double order_cost) {
         if(order_id != 0){
-            Customer customer = iCustomerDao.findByCustomerId(customer_id);
-            Shop shop = iShopDao.findByShopId(shop_id);
-            OrderTable orderTable = OrderTable.builder()
+            Customer customer = customerService.findByCustomerId(customer_id);
+            Shop shop = shopService.findByShopId(shop_id);
+            OrderTable newOrderTable = OrderTable.builder()
                     .orderId(order_id)
-                    .customer(customer)
-                    .shop(shop)
                     .orderState(order_state)
                     .orderCost(order_cost)
+                    .customer(customer)
+                    .shop(shop)
                     .build();
-            return iOrderTableDao.save(orderTable);
+            return iOrderTableDao.save(newOrderTable);
         }else{
-            Customer customer = iCustomerDao.findByCustomerId(customer_id);
-            Shop shop = iShopDao.findByShopId(shop_id);
-            OrderTable orderTable = OrderTable.builder()
-                    .customer(customer)
-                    .shop(shop)
+            Customer customer = customerService.findByCustomerId(customer_id);
+            Shop shop = shopService.findByShopId(shop_id);
+            OrderTable newOrderTable = OrderTable.builder()
                     .orderState(order_state)
                     .orderCost(order_cost)
+                    .customer(customer)
+                    .shop(shop)
                     .build();
-            return iOrderTableDao.save(orderTable);
+            return iOrderTableDao.save(newOrderTable);
         }
     }
 
@@ -76,7 +83,7 @@ public class OrderTableServiceImpl implements OrderTableService {
     }
 
     @Override
-    public OrderTable findByCustomer_CustomerIdAndShopShopIdAndOrderState(Integer customer_id, Integer shop_id, Integer order_state) {
+    public List<OrderTable> findByCustomer_CustomerIdAndShopShopIdAndOrderState(Integer customer_id, Integer shop_id, Integer order_state) {
         return iOrderTableDao.findByCustomer_CustomerIdAndShopShopIdAndOrderState(customer_id,shop_id,order_state);
     }
 }

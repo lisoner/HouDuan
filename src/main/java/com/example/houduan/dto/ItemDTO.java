@@ -12,5 +12,5 @@ public class ItemDTO {
     private String itemName;
     private Double itemPrice;
     private Integer businessId;
-
+    private String businessName;
 }

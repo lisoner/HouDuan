@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShopListDTO {
+public class ShopDTO {
     private Integer shopId;
     private String shopName;
     private Integer businessId;
-
+    private String businessName;
 }
