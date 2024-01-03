@@ -10,4 +10,5 @@ public interface CustomerService {
     CustomerInfoDTO login(String customer_name, String password);
     CustomerInfoDTO findCustomerByCustomerName(String customer_name);
     Customer findByCustomerId(Integer customer_id);
+    CustomerInfoDTO save(String customer_name, String password);
 }

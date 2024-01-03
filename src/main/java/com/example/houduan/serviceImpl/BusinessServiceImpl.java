@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
 @CommonsLog
@@ -47,5 +48,15 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public Business findByBusinessId(Integer business_id) {
         return ibusinessDao.findByBusinessId(business_id);
+    }
+
+    @Override
+    public BusinessInfoDTO save(String business_name, String password) {
+        Business business = Business.builder()
+                .businessName(business_name)
+                .password(password)
+                .build();
+        Business tempBusiness = ibusinessDao.save(business);
+        return modelMapper.map(tempBusiness, BusinessInfoDTO.class);
     }
 }

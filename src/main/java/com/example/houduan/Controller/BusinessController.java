@@ -1,5 +1,6 @@
 package com.example.houduan.Controller;
 
+import com.example.houduan.dto.BusinessInfoDTO;
 import com.example.houduan.entity.Business;
 import com.example.houduan.service.BusinessService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/businessLogin")
+@RequestMapping
 @Tag(name = "Business", description = "BusinessController")
 public class BusinessController {
     @Resource
@@ -25,9 +26,15 @@ public class BusinessController {
 
     /*这里是Login部分*/
     @Operation(summary = "商家登录",description = "商家登录")
-    @PostMapping
+    @PostMapping("/businessLogin")
     public ResponseEntity<Object> login(@RequestParam String business_name, @RequestParam String password){
         return new ResponseEntity<>(businessService.login(business_name, password), HttpStatus.OK);
+    }
+
+    @Operation(summary = "商家注册",description = "商家注册")
+    @PostMapping("/businessRegister")
+    public BusinessInfoDTO save(@RequestParam String business_name, @RequestParam String password){
+        return businessService.save(business_name, password);
     }
 
 }

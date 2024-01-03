@@ -9,4 +9,5 @@ public interface IBusinessDao extends JpaRepository<Business, Integer> {
     Business findByBusinessName(String business_name);
     Business findByBusinessId(Integer business_id);
     Business findByBusinessNameAndPassword(String business_name, String password);
+    Business save(Business business);
 }

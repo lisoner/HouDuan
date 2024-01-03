@@ -46,4 +46,14 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findByCustomerId(Integer customer_id) {
         return iCustomerDao.findByCustomerId(customer_id);
     }
+
+    @Override
+    public CustomerInfoDTO save(String customer_name, String password) {
+        Customer customer = Customer.builder()
+                .customerName(customer_name)
+                .password(password)
+                .build();
+        Customer tempCustomer = iCustomerDao.save(customer);
+        return modelMapper.map(tempCustomer, CustomerInfoDTO.class);
+    }
 }
